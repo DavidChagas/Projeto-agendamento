@@ -56,24 +56,19 @@ public class TelaAgendamento extends javax.swing.JFrame {
         }
     }
     
-    private void preencherJtable() {
-        //Aqui carrego minha lista
-        Agendamento a = new Agendamento();
-        List lista = a.lista();
-        System.out.println(lista.size() + "");
+        
+    private void preenche(Agendamento x){
         modeloTable = (DefaultTableModel) tabela.getModel();
-
-              //Aqui verifico se a jTable tem algum registo se tiver eu deleto
-        while (modeloTable.getRowCount() > 0) {
-           modeloTable.removeRow(0);
+        System.out.println("numero de linhas "+tabela.getRowCount());
+        if(tabela.getRowCount() == 100){
+        modeloTable.setRowCount(0);
         }
-
-                 //Aqui eu adiciono cada linha da lista na jTable
-        for (int i=0;i<lista.size();i++) {
-            modeloTable.addRow(new Object[] { lista});
-            
-        }
+        
+        System.out.println("quantidade de linhas: "+modeloTable.getRowCount());
+        modeloTable.addRow(new Object[] {x.getC().getNome(), x.getS().getNome(), x.getDatahora(), x.getP().getNome()});
     }
+    
+    
 
     public void listarServicos() {
         Servico s[] = new Servico[4];
@@ -200,12 +195,116 @@ public class TelaAgendamento extends javax.swing.JFrame {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
                 "Cliente", "Serviço", "Data/Hora", "Profissional"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tabela.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
@@ -253,6 +352,11 @@ public class TelaAgendamento extends javax.swing.JFrame {
         jLabel4.setText("Data - Hora");
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnAjuda.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnAjuda.setText("?");
@@ -391,12 +495,12 @@ public class TelaAgendamento extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Profissional não selecionado!");
             return;
         };
-        
-
-        if (cxData.getText() == "  /  /     -   :  ") {
+            String data4 = cxData.getText().toString();
+            System.out.println("data e horaaa"+ data4);
+        if (data4 == "  /  /     -   :   ") {
             JOptionPane.showMessageDialog(null, "Data/Hora não selecionado!");
             return;
-        }
+        };
         
 
         Agendamento ag = new Agendamento();
@@ -424,34 +528,48 @@ public class TelaAgendamento extends javax.swing.JFrame {
         p[4] = new Profissional(5, "Ana", s[3]);
         p[5] = new Profissional(6, "Roger", s[1]);
 
+        
         for (int i = 0; i < 6; i++) {
-            if ((c[i].getCodigo() + " - " + c[i].getNome()).toString() == cxCliente.getSelectedItem().toString()) {
-                System.out.println("foooi");
+            String cliente = (c[i].getCodigo() + " - " + c[i].getNome());
+            String cxcliente = cxCliente.getSelectedItem().toString();
+            if (cliente.equalsIgnoreCase(cxcliente)){
                 ag.setC(c[i]);
-            
+                System.out.println("cliente selecionado "+ ag.getC().getNome());
+                break;
             }
         }
         
         for (int j = 0; j < 5; j++) {
-            if (s[j].getNome() == cxServico.getSelectedItem().toString()) {
+            String servico = (s[j].getCodigo() + " - " + s[j].getNome());
+            String cxservico = cxServico.getSelectedItem().toString();
+            if (servico.equalsIgnoreCase(cxservico)) {
                 ag.setS(s[j]);
+                System.out.println("serviço selecionado "+ ag.getS().getNome());
+                break;
             }
         }
         
         for (int k = 0; k < 6; k++) {
-            if (p[k].getNome() == cxProfissional.getSelectedItem().toString()) {
+            String profissional = (p[k].getId() + " - " + p[k].getNome());
+            String cxprofissional = cxProfissional.getSelectedItem().toString();
+            if (profissional.equalsIgnoreCase(cxprofissional)) {
                 ag.setP(p[k]);
+                System.out.println("profissional selecionado "+ ag.getP().getNome());
+                break;
             }
         }
         
         String data = cxData.getText();
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy - hh:mm");
-        System.out.println(""+data);
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
         try {
             Date data2 = df.parse(data);
-            ag.setDatahora(data2);
-            System.out.println(""+data);
-            preencherJtable();
+            ag.setDatahora(data);
+            System.out.println("data selecionada "+data);
+            preenche(ag);
+            cxCliente.setSelectedItem("Escolha");
+            cxServico.setSelectedItem("Escolha");
+            cxProfissional.setSelectedItem("Escolha");
+            cxData.setValue(null);
         } catch (ParseException ex) {
             Logger.getLogger(TelaAgendamento.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -472,6 +590,16 @@ public class TelaAgendamento extends javax.swing.JFrame {
     private void tabelaAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tabelaAncestorAdded
             
     }//GEN-LAST:event_tabelaAncestorAdded
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        modeloTable = (DefaultTableModel)tabela.getModel();
+        if (tabela.getSelectedRow() >= 0){
+            modeloTable.removeRow(tabela.getSelectedRow());
+            tabela.setModel(modeloTable);
+        }else{
+            JOptionPane.showMessageDialog(null, "Favor selecionar uma linha");
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments

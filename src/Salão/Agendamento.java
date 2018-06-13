@@ -23,7 +23,7 @@ public class Agendamento {
     private Cliente c;
     private Servico s;
     private Profissional p;
-    private Date datahora;
+    private String datahora;
     
     //int cont = 0;
 
@@ -67,11 +67,13 @@ public class Agendamento {
         this.p = p;
     }
 
-    public Date getDatahora() {
+    public String getDatahora() {
         return datahora;
     }
 
-    public void setDatahora(Date datahora) {
+    
+
+    public void setDatahora(String datahora) {
         this.datahora = datahora;
     }
     
